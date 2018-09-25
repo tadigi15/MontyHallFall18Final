@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            >
+
+            <!-- Wins -->
+            <TextView
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Wins"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/win_count"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="0"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/win_percentage"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:text="0"
+                android:textSize="20sp"/>
+
+            <!-- Losses -->
+            <TextView
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="Loss"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/loss_count"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="0"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/loss_percentage"
+                android:layout_column="2"
+                android:layout_row="1"
+                android:text="0"
+                android:textSize="20sp"/>
+
+            <!-- Total -->
+            <TextView
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="Total"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/total_count"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="0"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+            <TextView
+                android:id="@+id/total_percentage"
+                android:layout_column="2"
+                android:layout_row="2"
+                android:text="0"
+                android:textSize="20sp"/>
+
+            <!-- finish grid layout -->
+
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_a_door"
+            android:id="@+id/prompt"
+            android:textSize="26sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            />
+
+        <include layout="@layout/doors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment"
+        android:layout_gravity="right"/>
+
+        -->
+
+</FrameLayout>
