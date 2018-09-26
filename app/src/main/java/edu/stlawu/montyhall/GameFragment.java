@@ -48,6 +48,8 @@ public class GameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_game, container, false);
 
@@ -107,24 +109,16 @@ public class GameFragment extends Fragment {
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -136,24 +130,16 @@ public class GameFragment extends Fragment {
                                                 door1button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -183,24 +169,16 @@ public class GameFragment extends Fragment {
                                                 door2button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -212,24 +190,16 @@ public class GameFragment extends Fragment {
                                                 door1button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -287,24 +257,16 @@ public class GameFragment extends Fragment {
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -316,24 +278,16 @@ public class GameFragment extends Fragment {
                                                 door2button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -363,24 +317,16 @@ public class GameFragment extends Fragment {
                                                 door1button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -392,24 +338,16 @@ public class GameFragment extends Fragment {
                                                 door2button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -466,24 +404,16 @@ public class GameFragment extends Fragment {
                                                 door2button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -495,24 +425,16 @@ public class GameFragment extends Fragment {
                                                 door3button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -542,24 +464,16 @@ public class GameFragment extends Fragment {
                                                 door1button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                         // Player keeps choice
@@ -571,24 +485,16 @@ public class GameFragment extends Fragment {
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                prompt.setText("You Win!!");
-                                                wincounter++;
-                                                totalcounter++;
-                                                winView.setText(String.valueOf(wincounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+
+                                                incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
-                                                prompt.setText("You Lose!!");
-                                                losscounter++;
-                                                totalcounter++;
-                                                lossView.setText(String.valueOf(losscounter));
-                                                totalView.setText(String.valueOf(totalcounter));
-                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+
+                                                incrementLossCounter(prompt, lossView, totalView, losspView);
                                             }
                                         }
                                     }
@@ -605,4 +511,27 @@ public class GameFragment extends Fragment {
         });
         return rootView;
     }
+
+    public void incrementWinCounter (TextView prompt, TextView winView, TextView totalView, TextView winpView) {
+        prompt.setText("You Win!!");
+        wincounter++;
+        totalcounter++;
+        winView.setText(String.valueOf(wincounter));
+        totalView.setText(String.valueOf(totalcounter));
+        winpView.setText(String.valueOf(wincounter / totalcounter));
+    }
+
+    public void incrementLossCounter (TextView prompt, TextView lossView, TextView totalView, TextView losspView) {
+        prompt.setText("You Lose!!");
+        losscounter++;
+        totalcounter++;
+        lossView.setText(String.valueOf(losscounter));
+        totalView.setText(String.valueOf(totalcounter));
+        losspView.setText(String.valueOf(losscounter / totalcounter));
+
+    }
+
+
+
+
 }
