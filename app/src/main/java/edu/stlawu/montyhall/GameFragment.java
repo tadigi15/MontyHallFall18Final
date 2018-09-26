@@ -20,10 +20,6 @@ import java.util.Random;
  */
 public class GameFragment extends Fragment {
 
-    // Counters
-    //private TextView win_count = null;
-
-
     // Buttons for doors
     ImageButton door1button = null;
     ImageButton door2button = null;
@@ -32,7 +28,7 @@ public class GameFragment extends Fragment {
     private boolean door1_tf = false;
     private boolean door2_tf = false;
     private boolean door3_tf = false;
-
+    //Counters
     private int wincounter = 0;
     private int losscounter = 0;
     private int totalcounter = 0;
@@ -47,8 +43,6 @@ public class GameFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-
     }
 
     @Override
@@ -57,12 +51,12 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_game, container, false);
 
+        // Initalize textViews
         final TextView winView = rootView.findViewById(R.id.win_count);
         final TextView winpView = rootView.findViewById(R.id.win_percentage);
         final TextView lossView = rootView.findViewById(R.id.loss_count);
         final TextView losspView = rootView.findViewById(R.id.loss_percentage);
         final TextView totalView = rootView.findViewById(R.id.total_count);
-
         final TextView prompt = rootView.findViewById(R.id.prompt);
 
         // Initalize door buttons
@@ -119,7 +113,6 @@ public class GameFragment extends Fragment {
                                                 winView.setText(String.valueOf(wincounter));
                                                 totalView.setText(String.valueOf(totalcounter));
                                                 winpView.setText(String.valueOf(wincounter / totalcounter));
-
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
@@ -150,7 +143,6 @@ public class GameFragment extends Fragment {
                                                 totalView.setText(String.valueOf(totalcounter));
                                                 winpView.setText(String.valueOf(wincounter / totalcounter));
                                             }
-
                                             // Wrong door was chosen (door 3)
                                             else {
                                                 door1button.setImageResource(R.drawable.goat);
@@ -168,10 +160,7 @@ public class GameFragment extends Fragment {
                                 };
                                 Handler h2 = new Handler();
                                 h2.postDelayed(run2, 3000);
-
-
                             }
-
                             // If r = 2, change 3rd door
                             else {
                                 door3button.setImageResource(R.drawable.goat);
@@ -200,7 +189,6 @@ public class GameFragment extends Fragment {
                                                 winView.setText(String.valueOf(wincounter));
                                                 totalView.setText(String.valueOf(totalcounter));
                                                 winpView.setText(String.valueOf(wincounter / totalcounter));
-
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
@@ -231,7 +219,6 @@ public class GameFragment extends Fragment {
                                                 totalView.setText(String.valueOf(totalcounter));
                                                 winpView.setText(String.valueOf(wincounter / totalcounter));
                                             }
-
                                             // Wrong door was chosen (door 2)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
@@ -247,25 +234,17 @@ public class GameFragment extends Fragment {
                                         }
                                     }
                                 };
-
                                 Handler h2 = new Handler();
                                 h2.postDelayed(run2, 3000);
                             }
-
                         }
                     };
-
                     Handler h = new Handler();
                     h.postDelayed(run1, 500);
                 }
-
             }
         });
-
-
-
         // Button for the second door (middle)
-
         door2button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -279,27 +258,172 @@ public class GameFragment extends Fragment {
                 door2button.setImageResource(R.drawable.closed_door_chosen);
                 door2_tf = true;
 
-                // Get random number
-                int ran1 = random_number.nextInt(2) + 1;
+                if (door2_tf && !door1_tf && !door3_tf){
+                    Runnable runn1 = new Runnable() {
+                        @Override
+                        public void run() {
+                            // Get random number
+                            int ran1 = random_number.nextInt(2) + 1;
 
-                // If r = 1, change 1st door
-                if (door2_tf && !door1_tf && !door3_tf) {
-                    if (ran1 == 1) {
-                        door1button.setImageResource(R.drawable.goat);
-                        door1button.setEnabled(false);
-                        prompt.setText("3 Seconds To Pick Again.");
-                    }
+                            // If r = 1, change 1st door
+                            if (ran1 == 1) {
+                                door1button.setImageResource(R.drawable.goat);
+                                door1button.setEnabled(false);
+                                prompt.setText("3 Seconds To Pick Again.");
 
-                    // If r = 2, change 3rd door
-                    else if (ran1 == 2) {
-                        door3button.setImageResource(R.drawable.goat);
-                        door3button.setEnabled(false);
-                        prompt.setText("3 Seconds To Pick Again.");
-                    }
+                                Runnable runn2 = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Player Switches Pick from door 2 to door 3
+                                        if (door3_tf) {
+                                            door2_tf = false;
+                                            door3button.setEnabled(false);
+                                            door2button.setImageResource(R.drawable.closed_door);
+
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 3)
+                                            if (ran2 == 1) {
+                                                door3button.setImageResource(R.drawable.car);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 2)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                        // Player keeps choice
+                                        else {
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 2)
+                                            if (ran2 == 1) {
+                                                door2button.setImageResource(R.drawable.car);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door3button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 2)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                    }
+                                };
+                                Handler h2 = new Handler();
+                                h2.postDelayed(runn2, 3000);
+                            }
+                            // If r = 2, change 3rd door
+                            else {
+                                door3button.setImageResource(R.drawable.goat);
+                                door3button.setEnabled(false);
+                                prompt.setText("3 Seconds To Pick Again.");
+
+                                Runnable runn2 = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Player Switches Pick from door 2 to door 1
+                                        if (door1_tf) {
+                                            door2_tf = false;
+                                            door1button.setEnabled(false);
+                                            door2button.setImageResource(R.drawable.closed_door);
+
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 1)
+                                            if (ran2 == 1) {
+                                                door1button.setImageResource(R.drawable.car);
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 2)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                        // Player keeps choice
+                                        else {
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 2)
+                                            if (ran2 == 1) {
+                                                door2button.setImageResource(R.drawable.car);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door3button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 1)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                    }
+                                };
+                                Handler h2 = new Handler();
+                                h2.postDelayed(runn2, 3000);
+                            }
+                        }
+                    };
+                    Handler h = new Handler();
+                    h.postDelayed(runn1, 500);
                 }
             }
         });
-
         // Button for the third door (most right)
         door3button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,28 +437,172 @@ public class GameFragment extends Fragment {
                 door3button.setImageResource(R.drawable.closed_door_chosen);
                 door3_tf = true;
 
-                // Get random number
-                int ran1 = random_number.nextInt(2) + 1;
+                if (door3_tf && !door1_tf && !door2_tf){
+                    Runnable runn1 = new Runnable() {
+                        @Override
+                        public void run() {
+                            // Get random number
+                            int ran1 = random_number.nextInt(2) + 1;
 
-                // If r = 1, change 1st door
-                if (door3_tf && !door2_tf && !door1_tf) {
-                    if (ran1 == 1) {
-                        door1button.setImageResource(R.drawable.goat);
-                        door1button.setEnabled(false);
-                        prompt.setText("3 Seconds To Pick Again.");
-                    }
-                    // If r = 2, change 2nd door
-                    else if (ran1 == 2) {
-                        door2button.setImageResource(R.drawable.goat);
-                        door2button.setEnabled(false);
-                        prompt.setText("3 Seconds To Pick Again.");
-                    }
+                            // If r = 1, change 1st door
+                            if (ran1 == 1) {
+                                door1button.setImageResource(R.drawable.goat);
+                                door1button.setEnabled(false);
+                                prompt.setText("3 Seconds To Pick Again.");
+
+                                Runnable runn2 = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Player Switches Pick from door 3 to door 2
+                                        if (door2_tf) {
+                                            door3_tf = false;
+                                            door2button.setEnabled(false);
+                                            door3button.setImageResource(R.drawable.closed_door);
+
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 2)
+                                            if (ran2 == 1) {
+                                                door2button.setImageResource(R.drawable.car);
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 3)
+                                            else {
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door3button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                        // Player keeps choice
+                                        else {
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 3)
+                                            if (ran2 == 1) {
+                                                door3button.setImageResource(R.drawable.car);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 1)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                    }
+                                };
+                                Handler h2 = new Handler();
+                                h2.postDelayed(runn2, 3000);
+                            }
+                            // If r = 2, change 2nd door
+                            else {
+                                door2button.setImageResource(R.drawable.goat);
+                                door2button.setEnabled(false);
+                                prompt.setText("3 Seconds To Pick Again.");
+
+                                Runnable run2 = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Player Switches Pick from door 3 to door 1
+                                        if (door1_tf) {
+                                            door3_tf = false;
+                                            door1button.setEnabled(false);
+                                            door3button.setImageResource(R.drawable.closed_door);
+
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 1)
+                                            if (ran2 == 1) {
+                                                door1button.setImageResource(R.drawable.car);
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 3)
+                                            else {
+                                                door1button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door3button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                        // Player keeps choice
+                                        else {
+                                            int ran2 = random_number.nextInt(2) + 1;
+
+                                            // Correct door was chosen (door 3)
+                                            if (ran2 == 1) {
+                                                door3button.setImageResource(R.drawable.car);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.goat);
+                                                prompt.setText("You Win!!");
+                                                wincounter++;
+                                                totalcounter++;
+                                                winView.setText(String.valueOf(wincounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                winpView.setText(String.valueOf(wincounter / totalcounter));
+                                            }
+                                            // Wrong door was chosen (door 1)
+                                            else {
+                                                door3button.setImageResource(R.drawable.goat);
+                                                door2button.setImageResource(R.drawable.goat);
+                                                door1button.setImageResource(R.drawable.car);
+                                                prompt.setText("You Lose!!");
+                                                losscounter++;
+                                                totalcounter++;
+                                                lossView.setText(String.valueOf(losscounter));
+                                                totalView.setText(String.valueOf(totalcounter));
+                                                losspView.setText(String.valueOf(losscounter / totalcounter));
+                                            }
+                                        }
+                                    }
+                                };
+                                Handler h2 = new Handler();
+                                h2.postDelayed(run2, 3000);
+                            }
+                        }
+                    };
+                    Handler h = new Handler();
+                    h.postDelayed(runn1, 500);
                 }
             }
         });
-
-
         return rootView;
     }
-
 }
