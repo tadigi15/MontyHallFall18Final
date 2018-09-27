@@ -31,6 +31,10 @@ public class MainFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    MediaPlayer mpAbout;
+    MediaPlayer mpContin;
+    MediaPlayer mpNew;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -52,6 +56,10 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        mpAbout = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.about);
+        mpContin = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.contin);
+        mpNew = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.newgame);
+
 
 
 
@@ -59,6 +67,8 @@ public class MainFragment extends Fragment {
         newButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
+                 mpNew.start();
 
                SharedPreferences.Editor pref_ed =
                  getActivity().getSharedPreferences(
@@ -69,9 +79,44 @@ public class MainFragment extends Fragment {
                    getActivity(), GameActivity.class);
                  getActivity().startActivity(intent);
              }
-         }
+         });
 
-);
+        final View continueGame = rootView.findViewById(R.id.continue_button);
+        continueGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mpContin.start();
+                // sharedPreferences
+                SharedPreferences.Editor pref_ed = getActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
+
+                pref_ed.putBoolean(NEW_CLICKED, false).apply();
+                pref_ed.putBoolean("WAITGAME", true).apply();
+
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        final View aboutGame = rootView.findViewById(R.id.about_button);
+        aboutGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mpAbout.start();
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.about_title_text);
+                builder.setMessage(R.string.about);
+                builder.setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int a) {
+                                return;
+                            }
+                        });
+                builder.show();
+            }
+        });
 
         return rootView;
     }
