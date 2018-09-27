@@ -60,9 +60,7 @@ public class MainFragment extends Fragment {
         mpContin = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.contin);
         mpNew = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.newgame);
 
-
-
-
+        // New button views and Initialization
         final View newButton = rootView.findViewById(R.id.new_button);
         newButton.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -81,6 +79,7 @@ public class MainFragment extends Fragment {
              }
          });
 
+        // New continue views and Initialization
         final View continueGame = rootView.findViewById(R.id.continue_button);
         continueGame.setOnClickListener(new View.OnClickListener() {
             @Override
