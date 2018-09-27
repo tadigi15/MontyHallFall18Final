@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,10 +25,14 @@ public class GameFragment extends Fragment {
     ImageButton door1button = null;
     ImageButton door2button = null;
     ImageButton door3button = null;
+    Button resetButton = null;
 
     private boolean door1_tf = false;
     private boolean door2_tf = false;
     private boolean door3_tf = false;
+
+    TextView prompt, winView, winpView, lossView, losspView, totalView;
+
     //Counters
     private int wincounter = 0;
     private int losscounter = 0;
@@ -54,17 +59,19 @@ public class GameFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_game, container, false);
 
         // Initalize textViews
-        final TextView winView = rootView.findViewById(R.id.win_count);
-        final TextView winpView = rootView.findViewById(R.id.win_percentage);
-        final TextView lossView = rootView.findViewById(R.id.loss_count);
-        final TextView losspView = rootView.findViewById(R.id.loss_percentage);
-        final TextView totalView = rootView.findViewById(R.id.total_count);
-        final TextView prompt = rootView.findViewById(R.id.prompt);
+        winView = rootView.findViewById(R.id.win_count);
+        winpView = rootView.findViewById(R.id.win_percentage);
+        lossView = rootView.findViewById(R.id.loss_count);
+        losspView = rootView.findViewById(R.id.loss_percentage);
+        totalView = rootView.findViewById(R.id.total_count);
+        prompt = rootView.findViewById(R.id.prompt);
 
-        // Initalize door buttons
+
+        // Initialize buttons
         door1button = rootView.findViewById(R.id.door1);
         door2button = rootView.findViewById(R.id.door2);
         door3button = rootView.findViewById(R.id.door3);
+        resetButton = rootView.findViewById(R.id.reset_button);
 
         // Button for the first door (most left)
         door1button.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +119,7 @@ public class GameFragment extends Fragment {
 
                                                 incrementWinCounter(prompt, winView, totalView, winpView);
                                             }
+
                                             // Wrong door was chosen (door 1)
                                             else {
                                                 door3button.setImageResource(R.drawable.goat);
@@ -509,6 +517,13 @@ public class GameFragment extends Fragment {
                 }
             }
         });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+            }
+        });
         return rootView;
     }
 
@@ -528,6 +543,26 @@ public class GameFragment extends Fragment {
         lossView.setText(String.valueOf(losscounter));
         totalView.setText(String.valueOf(totalcounter));
         losspView.setText(String.valueOf(losscounter / totalcounter));
+
+    }
+
+    public void reset() {
+        door1button.setEnabled(true);
+        door2button.setEnabled(true);
+        door3button.setEnabled(true);
+
+        door1button.setImageResource(R.drawable.closed_door);
+        door2button.setImageResource(R.drawable.closed_door);
+        door3button.setImageResource(R.drawable.closed_door);
+
+        door1_tf = false;
+        door2_tf = false;
+        door3_tf = false;
+
+        prompt.setText("Choose a door");
+
+
+
 
     }
 
