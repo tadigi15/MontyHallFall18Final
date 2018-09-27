@@ -29,6 +29,9 @@ public class GameFragment extends Fragment {
     private boolean door1_tf = false;
     private boolean door2_tf = false;
     private boolean door3_tf = false;
+    private boolean door1_clicked = false;
+    private boolean door2_clicked = false;
+    private boolean door3_clicked = false;
 
     MediaPlayer mpGoat;
     MediaPlayer mpWin;
@@ -86,14 +89,26 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Change image to chosen door
-                if (door2button.isEnabled()) {
+
+                if (door2button.isEnabled() || door2_tf) {
                     door2button.setImageResource(R.drawable.closed_door);
                 }
-                if (door3button.isEnabled()){
+                if (door3button.isEnabled() || door3_tf){
                     door3button.setImageResource(R.drawable.closed_door);
                 }
+
                 door1button.setImageResource(R.drawable.closed_door_chosen);
+                door1button.setEnabled(false);
                 door1_tf = true;
+                door1_clicked = true;
+
+                if (door2_clicked) {
+                    door2button.setEnabled(false);
+                }
+                if (door3_clicked) {
+                    door3button.setEnabled(false);
+                }
+
 
                 if (door1_tf && !door2_tf && !door3_tf) {
                     Runnable run1 = new Runnable() {
@@ -110,7 +125,7 @@ public class GameFragment extends Fragment {
                                 door2button.setImageResource(R.drawable.goat);
                                 door2button.setEnabled(false);
 
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable run2 = new Runnable() {
                                     @Override
@@ -121,58 +136,79 @@ public class GameFragment extends Fragment {
                                             door3button.setEnabled(false);
                                             door1button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
 
-                                            // Correct door was chosen (door 3)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
 
-                                                door3button.setImageResource(R.drawable.car);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
+                                            doorCountDown(door3button);
 
-                                                incrementWinCounter();
-                                            }
+                                            Runnable doorDelay1 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // Correct door was chosen (door 3)
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                            // Wrong door was chosen (door 1)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door3button.setImageResource(R.drawable.car);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
 
-                                                incrementLossCounter();
-                                            }
+                                                    // Wrong door was chosen (door 1)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
+
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+
+                                                }
+                                            };Handler d1 = new Handler();
+                                            d1.postDelayed(doorDelay1, 3000);
+
+
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
 
-                                            // Correct door was chosen (door 1)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            doorCountDown(door1button);
 
-                                                door1button.setImageResource(R.drawable.car);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.goat);
+                                            Runnable doorDelay2 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    // Correct door was chosen (door 1)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 3)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door1button.setImageResource(R.drawable.car);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.goat);
 
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 3)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d2 = new Handler();
+                                            d2.postDelayed(doorDelay2, 3000);
                                         }
                                     }
                                 };
@@ -183,7 +219,7 @@ public class GameFragment extends Fragment {
                             else {
                                 door3button.setImageResource(R.drawable.goat);
                                 door3button.setEnabled(false);
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable run2 = new Runnable() {
                                     @Override
@@ -194,57 +230,76 @@ public class GameFragment extends Fragment {
                                             door2button.setEnabled(false);
                                             door1button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door2button);
 
-                                            // Correct door was chosen (door 2)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay3 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                door2button.setImageResource(R.drawable.car);
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
+                                                    // Correct door was chosen (door 2)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 1)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door2button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 1)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d3 = new Handler();
+                                            d3.postDelayed(doorDelay3, 3000);
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
 
-                                            // Correct door was chosen (door 1)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            doorCountDown(door1button);
 
-                                                door1button.setImageResource(R.drawable.car);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.goat);
+                                            Runnable doorDelay4 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 2)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                    // Correct door was chosen (door 1)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        door1button.setImageResource(R.drawable.car);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.goat);
 
-                                                incrementLossCounter();
-                                            }
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 2)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
+
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d4 = new Handler();
+                                            d4.postDelayed(doorDelay4, 3000);
                                         }
                                     }
                                 };
@@ -262,15 +317,25 @@ public class GameFragment extends Fragment {
         door2button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (door1button.isEnabled()) {
+                if (door1button.isEnabled() || door1_tf) {
                     door1button.setImageResource(R.drawable.closed_door);
                 }
-                if (door3button.isEnabled()){
+                if (door3button.isEnabled() || door3_tf){
                     door3button.setImageResource(R.drawable.closed_door);
                 }
 
                 door2button.setImageResource(R.drawable.closed_door_chosen);
+                door2button.setEnabled(false);
                 door2_tf = true;
+                door2_clicked = true;
+
+                // Disable doors after picks are chosen
+                if (door1_clicked) {
+                    door1button.setEnabled(false);
+                }
+                if (door3_clicked) {
+                    door3button.setEnabled(false);
+                }
 
                 if (door2_tf && !door1_tf && !door3_tf){
                     Runnable runn1 = new Runnable() {
@@ -286,7 +351,7 @@ public class GameFragment extends Fragment {
                             if (ran1 == 1) {
                                 door1button.setImageResource(R.drawable.goat);
                                 door1button.setEnabled(false);
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable runn2 = new Runnable() {
                                     @Override
@@ -297,58 +362,77 @@ public class GameFragment extends Fragment {
                                             door3button.setEnabled(false);
                                             door2button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door3button);
 
-                                            // Correct door was chosen (door 3)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay5 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                door3button.setImageResource(R.drawable.car);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
+                                                    // Correct door was chosen (door 3)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 2)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door3button.setImageResource(R.drawable.car);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 2)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+
+                                                }
+                                            };
+                                            Handler d5 = new Handler();
+                                            d5.postDelayed(doorDelay5, 3000);
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
 
-                                            // Correct door was chosen (door 2)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            doorCountDown(door2button);
 
-                                                door2button.setImageResource(R.drawable.car);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.goat);
+                                            Runnable doorDelay6 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    // Correct door was chosen (door 2)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 3)
-                                            //TODO
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door2button.setImageResource(R.drawable.car);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.goat);
 
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 3)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+
+                                                }
+                                            };
+                                            Handler d6 = new Handler();
+                                            d6.postDelayed(doorDelay6, 3000);
                                         }
                                     }
                                 };
@@ -359,7 +443,7 @@ public class GameFragment extends Fragment {
                             else {
                                 door3button.setImageResource(R.drawable.goat);
                                 door3button.setEnabled(false);
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable runn2 = new Runnable() {
                                     @Override
@@ -370,57 +454,73 @@ public class GameFragment extends Fragment {
                                             door1button.setEnabled(false);
                                             door2button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door1button);
 
-                                            // Correct door was chosen (door 1)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay7 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    // Correct door was chosen (door 1)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                door1button.setImageResource(R.drawable.car);
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 2)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 2)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.car);
 
-                                                incrementLossCounter();
-                                            }
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d7 = new Handler();
+                                            d7.postDelayed(doorDelay7, 3000);
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door2button);
 
-                                            // Correct door was chosen (door 2)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay8 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    // Correct door was chosen (door 2)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                door2button.setImageResource(R.drawable.car);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.car);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.goat);
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 1)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 1)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
 
-                                                incrementLossCounter();
-                                            }
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d8 = new Handler();
+                                            d8.postDelayed(doorDelay8, 3000);
                                         }
                                     }
                                 };
@@ -438,14 +538,25 @@ public class GameFragment extends Fragment {
         door3button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (door2button.isEnabled()) {
+                if (door2button.isEnabled() || door2_tf) {
                     door2button.setImageResource(R.drawable.closed_door);
                 }
-                if (door1button.isEnabled()){
+                if (door1button.isEnabled() || door1_tf){
                     door1button.setImageResource(R.drawable.closed_door);
                 }
                 door3button.setImageResource(R.drawable.closed_door_chosen);
                 door3_tf = true;
+                door3_clicked = true;
+                door3button.setEnabled(false);
+
+                // Disable doors after picks are chosen
+                if (door1_clicked) {
+                    door1button.setEnabled(false);
+                }
+                if (door2_clicked) {
+                    door2button.setEnabled(false);
+                }
+
 
                 if (door3_tf && !door1_tf && !door2_tf){
                     Runnable runn1 = new Runnable() {
@@ -461,7 +572,7 @@ public class GameFragment extends Fragment {
                             if (ran1 == 1) {
                                 door1button.setImageResource(R.drawable.goat);
                                 door1button.setEnabled(false);
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable runn2 = new Runnable() {
                                     @Override
@@ -472,57 +583,74 @@ public class GameFragment extends Fragment {
                                             door2button.setEnabled(false);
                                             door3button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door2button);
 
-                                            // Correct door was chosen (door 2)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay9 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                door2button.setImageResource(R.drawable.car);
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
+                                                    // Correct door was chosen (door 2)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 3)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door2button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
 
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 3)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d9 = new Handler();
+                                            d9.postDelayed(doorDelay9, 3000);
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door3button);
 
-                                            // Correct door was chosen (door 3)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay10 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
+                                                    // Correct door was chosen (door 3)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                door3button.setImageResource(R.drawable.car);
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.car);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 1)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 2)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.car);
 
-                                                incrementLossCounter();
-                                            }
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d10 = new Handler();
+                                            d10.postDelayed(doorDelay10, 3000);
                                         }
                                     }
                                 };
@@ -533,7 +661,7 @@ public class GameFragment extends Fragment {
                             else {
                                 door2button.setImageResource(R.drawable.goat);
                                 door2button.setEnabled(false);
-                                prompt.setText("3 Seconds To Pick Again.");
+                                prompt.setText("3 Seconds To Pick Again.\n Choose New or Do Nothing.");
 
                                 Runnable run2 = new Runnable() {
                                     @Override
@@ -544,57 +672,75 @@ public class GameFragment extends Fragment {
                                             door1button.setEnabled(false);
                                             door3button.setImageResource(R.drawable.closed_door);
 
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door1button);
 
-                                            // Correct door was chosen (door 1)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay11 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                door1button.setImageResource(R.drawable.car);
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
+                                                    // Correct door was chosen (door 1)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 3)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door1button.setImageResource(R.drawable.car);
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
 
-                                                door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door3button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 3)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door1button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door3button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d11 = new Handler();
+                                            d11.postDelayed(doorDelay11, 3000);
                                         }
                                         // Player keeps choice
                                         else {
-                                            int ran2 = random_number.nextInt(2) + 1;
+                                            doorCountDown(door3button);
 
-                                            // Correct door was chosen (door 3)
-                                            if (ran2 == 1) {
-                                                //Play Win Sound
-                                                mpWin.start();
+                                            Runnable doorDelay12 = new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    int ran2 = random_number.nextInt(2) + 1;
 
-                                                door3button.setImageResource(R.drawable.car);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.goat);
+                                                    // Correct door was chosen (door 3)
+                                                    if (ran2 == 1) {
+                                                        //Play Win Sound
+                                                        mpWin.start();
 
-                                                incrementWinCounter();
-                                            }
-                                            // Wrong door was chosen (door 1)
-                                            else {
-                                                //Play Loss Sound
-                                                mpLoss.start();
+                                                        door3button.setImageResource(R.drawable.car);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.goat);
 
-                                                door3button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.goat);
-                                                door1button.setImageResource(R.drawable.car);
+                                                        incrementWinCounter();
+                                                    }
+                                                    // Wrong door was chosen (door 1)
+                                                    else {
+                                                        //Play Loss Sound
+                                                        mpLoss.start();
 
-                                                incrementLossCounter();
-                                            }
+                                                        door3button.setImageResource(R.drawable.goat);
+                                                        door2button.setImageResource(R.drawable.goat);
+                                                        door1button.setImageResource(R.drawable.car);
+
+                                                        incrementLossCounter();
+                                                    }
+                                                }
+                                            };
+                                            Handler d12 = new Handler();
+                                            d12.postDelayed(doorDelay12, 3000);
                                         }
                                     }
                                 };
@@ -666,8 +812,33 @@ public class GameFragment extends Fragment {
         door2_tf = false;
         door3_tf = false;
 
+        door1_clicked = false;
+        door2_clicked = false;
+        door3_clicked = false;
+
         prompt.setText("Choose a door");
 
+    }
+
+    public void doorCountDown(final ImageButton chosenDoor) {
+        chosenDoor.setImageResource(R.drawable.three);
+        Runnable r1 = new Runnable() {
+            @Override
+            public void run() {
+                chosenDoor.setImageResource(R.drawable.two);
+            }
+        };
+        Handler h = new Handler();
+        h.postDelayed(r1, 1000);
+
+        Runnable r2 = new Runnable() {
+            @Override
+            public void run() {
+                chosenDoor.setImageResource(R.drawable.one);
+            }
+        };
+        Handler h2 = new Handler();
+        h2.postDelayed(r2, 2000);
     }
 
 

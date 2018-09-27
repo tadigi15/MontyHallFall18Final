@@ -8,11 +8,10 @@
     <string name="about_text">About</string>
     <string name="about">
         This is St. Lawrence University CS450
-        Implementation of the Monty Hall Game.
-
+        Implementation of the Monty Hall Game.\n \n
         The directions are simple. You choose a door first.
         Afterwards, you will have three seconds to either,
-        stay with the door you choose (hit nothing). Or you can
+        stay with the door you choose (hit nothing), or you can
         choose a new door. Enjoy!!
     </string>
     <string name="about_title_text">About the Monty Hall Problem</string>
