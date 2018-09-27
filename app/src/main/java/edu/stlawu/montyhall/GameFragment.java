@@ -31,6 +31,8 @@ public class GameFragment extends Fragment {
     private boolean door3_tf = false;
 
     MediaPlayer mpGoat;
+    MediaPlayer mpWin;
+    MediaPlayer mpLoss;
 
 
     TextView prompt, winView, winpView, lossView, losspView, totalView;
@@ -60,7 +62,10 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_game, container, false);
 
+        //Initalize MediaPlayers for our sounds
         mpGoat = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.goatsound);
+        mpWin = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.token);
+        mpLoss = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.glass);
 
         // Initalize textViews
         winView = rootView.findViewById(R.id.win_count);
@@ -120,6 +125,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 3)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
@@ -129,6 +137,9 @@ public class GameFragment extends Fragment {
 
                                             // Wrong door was chosen (door 1)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
@@ -142,6 +153,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 1)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door1button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
@@ -150,6 +164,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
@@ -181,6 +198,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 2)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door2button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
@@ -189,6 +209,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
@@ -202,6 +225,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 1)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door1button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
@@ -210,6 +236,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
@@ -272,6 +301,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 3)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
@@ -280,6 +312,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.car);
@@ -293,17 +328,24 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 2)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door2button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
 
                                                 incrementWinCounter();
                                             }
-                                            // Wrong door was chosen (door 2)
+                                            // Wrong door was chosen (door 3)
+                                            //TODO
                                             else {
-                                                door3button.setImageResource(R.drawable.goat);
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
+                                                door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
-                                                door2button.setImageResource(R.drawable.car);
+                                                door3button.setImageResource(R.drawable.car);
 
                                                 incrementLossCounter();
                                             }
@@ -332,6 +374,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 1)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door1button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
@@ -340,6 +385,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 2)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.car);
@@ -353,6 +401,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 2)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door2button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.goat);
@@ -361,6 +412,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
@@ -422,6 +476,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 2)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door2button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
@@ -430,6 +487,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
@@ -443,6 +503,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 3)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door3button.setImageResource(R.drawable.car);
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
@@ -451,6 +514,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
@@ -482,6 +548,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 1)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door1button.setImageResource(R.drawable.car);
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
@@ -490,6 +559,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 3)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door1button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door3button.setImageResource(R.drawable.car);
@@ -503,6 +575,9 @@ public class GameFragment extends Fragment {
 
                                             // Correct door was chosen (door 3)
                                             if (ran2 == 1) {
+                                                //Play Win Sound
+                                                mpWin.start();
+
                                                 door3button.setImageResource(R.drawable.car);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.goat);
@@ -511,6 +586,9 @@ public class GameFragment extends Fragment {
                                             }
                                             // Wrong door was chosen (door 1)
                                             else {
+                                                //Play Loss Sound
+                                                mpLoss.start();
+
                                                 door3button.setImageResource(R.drawable.goat);
                                                 door2button.setImageResource(R.drawable.goat);
                                                 door1button.setImageResource(R.drawable.car);
