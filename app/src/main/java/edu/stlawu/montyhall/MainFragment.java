@@ -1,10 +1,15 @@
 package edu.stlawu.montyhall;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,12 +50,16 @@ public class MainFragment extends Fragment {
             Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        View newButton = rootView.findViewById(R.id.new_button);
+
+
+
+        final View newButton = rootView.findViewById(R.id.new_button);
         newButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
                SharedPreferences.Editor pref_ed =
                  getActivity().getSharedPreferences(
                   PREF_NAME, Context.MODE_PRIVATE).edit();

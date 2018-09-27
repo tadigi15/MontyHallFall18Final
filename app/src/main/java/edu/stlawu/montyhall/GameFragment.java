@@ -1,7 +1,6 @@
 package edu.stlawu.montyhall;
 
-
-import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -31,6 +30,9 @@ public class GameFragment extends Fragment {
     private boolean door2_tf = false;
     private boolean door3_tf = false;
 
+    MediaPlayer mpGoat;
+
+
     TextView prompt, winView, winpView, lossView, losspView, totalView;
 
     //Counters
@@ -58,6 +60,8 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_game, container, false);
 
+        mpGoat = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.goatsound);
+
         // Initalize textViews
         winView = rootView.findViewById(R.id.win_count);
         winpView = rootView.findViewById(R.id.win_percentage);
@@ -65,7 +69,6 @@ public class GameFragment extends Fragment {
         losspView = rootView.findViewById(R.id.loss_percentage);
         totalView = rootView.findViewById(R.id.total_count);
         prompt = rootView.findViewById(R.id.prompt);
-
 
         // Initialize buttons
         door1button = rootView.findViewById(R.id.door1);
@@ -94,10 +97,14 @@ public class GameFragment extends Fragment {
                             // Get random number
                             int ran1 = random_number.nextInt(2) + 1;
 
+                            // Play Goat sound
+                            mpGoat.start();
+
                             // If r = 1, change 2nd door
                             if (ran1 == 1) {
                                 door2button.setImageResource(R.drawable.goat);
                                 door2button.setEnabled(false);
+
                                 prompt.setText("3 Seconds To Pick Again.");
 
                                 Runnable run2 = new Runnable() {
@@ -242,6 +249,9 @@ public class GameFragment extends Fragment {
                         public void run() {
                             // Get random number
                             int ran1 = random_number.nextInt(2) + 1;
+
+                            // Play Goat sound
+                            mpGoat.start();
 
                             // If r = 1, change 1st door
                             if (ran1 == 1) {
@@ -389,6 +399,9 @@ public class GameFragment extends Fragment {
                         public void run() {
                             // Get random number
                             int ran1 = random_number.nextInt(2) + 1;
+
+                            // Play goat sound
+                            mpGoat.start();
 
                             // If r = 1, change 1st door
                             if (ran1 == 1) {
