@@ -1,5 +1,7 @@
 package edu.stlawu.montyhall;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Random;
+
+import static android.content.Context.MODE_PRIVATE;
+import static edu.stlawu.montyhall.MainFragment.PREF_NAME;
 
 
 /**
@@ -54,7 +59,17 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
+
+        // Get win count data
+        SharedPreferences scoreWins = getActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        wincounter = scoreWins.getInt("WINS", 0);
+        // Get Loss count data
+        SharedPreferences scoreLoss = getActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        losscounter = scoreLoss.getInt("LOSSES", 0);
+        // Get total count data
+        SharedPreferences scoreTotal = getActivity().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        totalcounter = scoreTotal.getInt("TOTALRUNS", 0);
     }
 
     @Override
@@ -77,6 +92,17 @@ public class GameFragment extends Fragment {
         losspView = rootView.findViewById(R.id.loss_percentage);
         totalView = rootView.findViewById(R.id.total_count);
         prompt = rootView.findViewById(R.id.prompt);
+
+        // Set scores
+        winView.setText(String.valueOf(wincounter));
+        lossView.setText(String.valueOf(losscounter));
+        totalView.setText(String.valueOf(totalcounter));
+        float winpercentage = (float)wincounter / (float)totalcounter;
+        float losspercentage = (float)losscounter / (float)totalcounter;
+        winpercentage = winpercentage * 100;
+        losspercentage = losspercentage * 100;
+        winpView.setText(String.format("%.2f", winpercentage) + "%");
+        losspView.setText(String.format("%.2f", losspercentage) + "%");
 
         // Initialize buttons
         door1button = rootView.findViewById(R.id.door1);
@@ -762,6 +788,55 @@ public class GameFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences getStoredScores = getContext().
+                getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        getStoredScores.getInt("WINS", 0);
+        getStoredScores.getInt("LOSSES", 0);
+        getStoredScores.getInt("TOTALRUNS", 0);
+
+        winView.setText(String.valueOf(wincounter));
+        lossView.setText(String.valueOf(losscounter));
+        totalView.setText(String.valueOf(totalcounter));
+
+        float losspercentage = (float)losscounter / (float)totalcounter;
+        float winpercentage = (float)wincounter / (float)totalcounter;
+
+        losspercentage = losspercentage*100;
+        winpercentage = winpercentage * 100;
+
+        losspView.setText(String.format("%.2f", losspercentage) + "%");
+        winpView.setText(String.format("%.2f", winpercentage) + "%");
+
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        SharedPreferences.Editor scores = getActivity().
+                getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+
+        scores.putInt("WINS", wincounter).commit();
+        scores.putInt("LOSSES", losscounter).commit();
+        scores.putInt("TOTALRUNS", totalcounter).commit();
+        float losspercentage = (float)losscounter / (float)totalcounter;
+        float winpercentage = (float)wincounter / (float)totalcounter;
+
+        losspercentage = losspercentage*100;
+        winpercentage = winpercentage * 100;
+
+        scores.putFloat("WINSP", losspercentage).commit();
+        scores.putFloat("LOSSESP", winpercentage).commit();
+
     }
 
     public void incrementWinCounter () {
